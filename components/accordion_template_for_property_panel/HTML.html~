@@ -1,0 +1,18 @@
+<!-- Put you HTML contents here.
+
+	Don't use "id", replace them with "class", replace "#id" with ".id" in "CSS.css" file and change accordingly in your "View.js" file 
+
+-->
+<div id="panel">
+<div class="pqr">Properties</div>
+<table id="myTable" >
+</table>
+<div class="pqr">Tag Information</div>
+<div class="abc" id="abc" style="display:inline">
+<input class="mytext" type="text" id="mytext" placeholder="Enter level" ></input>
+</div>
+<div id="error" >Select value from list only</div>
+<div id="mycontainer" >
+</div>
+</div>​
+

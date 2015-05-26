@@ -1,0 +1,562 @@
+/* 
+ 
+ */
+define([
+    'underscore', // do not remove it.
+    'jquery', // do not remove it
+    'vcl/views/componentView', // do not remove it
+    'events',//Don't remove it
+//  'libs/custom/Library',  if you need a library file named Library.js already uploaded by you 
+    'd3', // remove it if not required by your graph and remove from function arg.
+    'text!templates/vcl/property.html' // HTML file 
+                     // put 'text!templates/vcl/<ComponentName>.html'
+], function(_, $, ComponentView,Events, d3, movG) {
+    var chartName = ComponentView.extend({
+        template: _.template(movG),     
+
+        render: function() {
+            $(this.parentId).html("");
+            $(this.parentId).append(this.template);
+            var width = this.width; // set width to container width
+            var height = this.height;// set height to container height
+//  Use this.parentId for refernce to DOM element to create visualization.    
+//  Use this.model.attributes.properties.get('count').attributes.propertyValue
+//  to link to property in "PROP.js" file  
+
+var level_data = [];
+var tag_data = [];
+var json=[];
+var w=0;
+var i=0;
+var q=0;
+var x1=0;
+var flag=0;
+var str1="";
+var x="";
+var delete_flag=0;
+var node_data=[]
+document.getElementById("abc").style.display="none";
+
+   var obj = node_data;
+ var table = document.getElementById("myTable");
+   for (var prop in obj) {
+      // important check that this is objects own property 
+      // not from prototype prop inherited
+
+      if(obj.hasOwnProperty(prop)){
+        console.log(prop + " = " + obj[prop]);
+        var row = table.insertRow(0);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = prop;
+        cell2.innerHTML = obj[prop];
+      }
+   }
+
+  var data=[];
+  //Add levels to auto-complete list
+  for(i=0;i<35;i++)
+    {
+      data.push(this.data[i].type);
+    }
+  //Remove duplicates
+  $.each(data, function(i, el){
+    if($.inArray(el, level_data) === -1) level_data.push(el);});
+    
+
+
+
+    var q=0;
+    var flag=0;
+    var str1="";
+    var x="";
+    var json=[];
+    var delete_flag=0;
+    $("#mytext").keypress(function(event){
+    if(event.keyCode==13){
+      submit();
+    }
+});
+document.addEventListener('keypress', function(event) {
+    if(flag%2 == 0) {
+        //alert('Left was pressed');
+    $( "#mytext" ).autocomplete({
+      /*Source refers to the list of fruits that are available in the auto complete list. */
+      source:level_data,
+      /* auto focus true means, the first item in the auto complete list is selected by default. therefore when the user hits enter,
+      it will be loaded in the textbox */
+      autoFocus: true ,
+
+    });
+    }
+    else if(flag%2 == 1){
+    console.log("..............." + this.data);
+        tag_data=[];
+        for(i=0;i<35;i++)
+        {   if(x==this.data[i].type)
+            {  tag_data.push(this.data[i].name);
+            }
+        }
+        //alert('Right was pressed');
+        $( "#mytext" ).autocomplete({
+      /*Source refers to the list of fruits that are available in the auto complete list. */
+      source:tag_data,
+      /* auto focus true means, the first item in the auto complete list is selected by default. therefore when the user hits enter,
+      it will be loaded in the textbox */
+      autoFocus: true ,
+
+    });
+
+    }
+
+}.bind(this));
+function submit(){
+  //console.log(str1);
+  str1=(document.getElementById("mytext")).value;
+  document.getElementById("mytext").value=null;
+  document.getElementById("error").style.display="none";
+  if(flag%2==0){
+    
+    level_length=level_data.length;
+    level_flag=0;
+    for(i=0;i<level_length;i++)
+    {
+      if(str1==level_data[i])
+        level_flag=level_flag+1;
+    }
+    if(level_flag==0)
+    { document.getElementById("error").style.display="block";
+      $("#error").delay(100).hide('fast').delay(00).show('fast').delay(300).hide('fast').delay(100).show('fast').delay(300).hide('fast').delay(100).show('fast').delay(300).hide(100);
+    }
+    else
+    {     for(i=0;i<json.length;i++)
+          {
+              if(json[i].level!=str1)
+              {
+                  x1=x1+1;
+              }
+              else{
+                  x1=0;
+                  break;
+              }
+          } 
+
+          if(x1>0||json.length==0)
+          {document.getElementById("mytext").placeholder="Enter tag";
+          x=str1;
+          //(document.getElementById("level").innerHTML)=x;
+          //document.getElementById("level").style.display="inline";
+          var node1;
+          w=w+1;
+          node1= '<label class="tags1"  id="l'+ w +'" >'+ x  +' <i class="ui-icon ui-icon-close" /></label>';
+          $("#abc").append(node1);
+          flag=flag+1;}
+          else
+          {
+            document.getElementById("error").style.display="block";
+            $("#error").delay(100).hide('fast').delay(100).show('fast').delay(500).hide('fast').delay(100).show('fast').delay(500).hide('fast').delay(100).show('fast').delay(500).hide(100);
+          }    
+
+          $('#l'+w+" i").click(function(){
+            $(this.parentNode).remove();
+            str1="";
+            document.getElementById("mytext").placeholder="Enter level";
+             flag=flag-1;
+
+          });
+          
+    }
+  }
+  else{
+    
+    tag_length=tag_data.length;
+    tag_flag=0;
+    for(i=0;i<tag_length;i++)
+    {
+      if(str1==tag_data[i])
+        tag_flag=tag_flag+1;
+    }
+      if(tag_flag==0)
+      { document.getElementById("error").style.display="block";
+        $("#error").delay(100).hide('fast').delay(00).show('fast').delay(500).hide('fast').delay(100).show('fast').delay(500).hide('fast').delay(100).show('fast').delay(500).hide(100);
+      }
+      else{
+        document.getElementById("mytext").placeholder="Enter level";
+      var node;
+      q=q+1;
+      node= '<label class="tags"  id="l'+ q +'" >'+ x +'&nbsp;&nbsp;:&nbsp;&nbsp;'+ str1 +' <i class="ui-icon ui-icon-close" /></label>';
+      $("#mycontainer").append(node);
+      
+
+      $('#l'+q+" i").click(function(){
+            $(this.parentNode).remove();
+            delete_flag=delete_flag+1;
+            console.log(el-((json.length)+delete_flag));
+            json.splice(el-((json.length)+delete_flag),1);
+	    console.log(json);
+
+          });
+
+      json.push({'level':x,'tag':str1});
+      flag=flag+1;
+      //document.getElementById("level").innerHTML="";
+      //document.getElementById("level").style.display="none";
+      el= "l"+ w;
+      var element = document.getElementById(el);
+      element.parentNode.removeChild(element);
+
+    }
+
+  }
+}
+
+
+        },
+
+        setSampleData: function() {
+
+	 this.data=[
+                          {
+                            "name": "muESP",
+                            "type": "Platform",
+                          "icon": "/platform.jpg"
+                          },
+                          {
+                            "name": "mkennedy0",
+                            "ip": "230.110.80.252",
+                            "state": "OFF",
+                            "type": "Device",
+                            "icon": "/workstation.jpg",
+                            "subType": "Workstation"
+                          },
+                          {
+                            "name": "dhart1",
+                            "ip": "160.244.92.225",
+                            "state": "OFF",
+                            "type": "Device",
+                            "icon": "/odroid.png",
+                            "subType": "Odroid"
+                          },
+                          {
+                            "name": "psnyder2",
+                            "ip": "196.6.114.66",
+                            "state": "ON",
+                            "type": "Device",
+                            "icon": "/workstation.jpg",
+                            "subType": "Workstation"
+                          },
+                          {
+                            "name": "wmason3",
+                            "ip": "159.133.212.242",
+                            "state": "ON",
+                            "type": "Device",
+                            "icon": "/workstation.jpg",
+                            "subType": "Workstation"
+                          },
+                          {
+                            "name": "dwelch4",
+                            "ip": "129.221.38.250",
+                            "state": "ON",
+                            "type": "Device",
+                            "icon": "/workstation.jpg",
+                            "subType": "Workstation"
+                          },
+                          {
+                            "name": "gjames5",
+                            "ip": "109.185.173.250",
+                            "state": "OFF",
+                            "type": "Device",
+                            "icon": "/workstation.jpg",
+                            "subType": "Workstation"
+                          },
+                          {
+                            "name": "mhudson6",
+                            "ip": "120.195.120.36",
+                            "state": "OFF",
+                            "type": "Device",
+                            "icon": "/odroid.png",
+                            "subType": "Odroid"
+                          },
+                          {
+                            "name": "jmitchell7",
+                            "ip": "39.9.43.102",
+                            "state": "OFF",
+                            "type": "Device",
+                            "icon": "/odroid.png",
+                            "subType": "Odroid"
+                          },
+                          {
+                            "name": "epeterson8",
+                            "ip": "244.7.14.0",
+                            "state": "ON",
+                            "type": "Device",
+                            "icon": "/workstation.jpg",
+                            "subType": "Workstation"
+                          },
+                          {
+                            "name": "wholmes9",
+                            "ip": "44.43.25.30",
+                            "state": "ON",
+                            "type": "Device",
+                            "icon": "/odroid.png",
+                            "subType": "Odroid"
+                          },
+                          {
+                            "id": 27,
+                            "name": "dmartinez0",
+                            "icon": "/eco123.jpg",
+                            "type": "Ecosystem"
+                          },
+                          {
+                            "id": 86,
+                            "name": "jsimmons1",
+                            "icon": "/eco123.jpg",
+                            "type": "Ecosystem"
+                          },
+                          {
+                            "id": 72,
+                            "name": "aowens2",
+                            "icon": "/eco123.jpg",
+                            "type": "Ecosystem"
+                          },
+                          {
+                            "id": 7,
+                            "name": "twest3",
+                            "icon": "/eco123.jpg",
+                            "type": "Ecosystem"
+                          },
+                          {
+                            "id": 15,
+                            "name": "lray4",
+                            "icon": "/eco123.jpg",
+                            "type": "Ecosystem"
+                          },
+                          {
+                            "id": 93,
+                            "state": "Dead",
+                            "name": "ereid0",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 65,
+                            "state": "Exception",
+                            "name": "mwelch1",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 66,
+                            "state": "Dead",
+                            "name": "lford3",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 71,
+                            "state": "Publishing",
+                            "name": "jbarnes5",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 1,
+                            "state": "Dead",
+                            "name": "wtucker6",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 64,
+                            "state": "Live",
+                            "name": "lmills7",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 42,
+                            "state": "Dead",
+                            "name": "welliott8",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 53,
+                            "state": "Publishing",
+                            "name": "kbishop9",
+                            "icon": "/agency123.png",
+                            "type": "Agency"
+                          },
+                          {
+                            "id": 95,
+                            "mainFileType": "groovyFile",
+                            "icon": "/groovyAgent.png",
+                            "name": "ggilbert2s",
+                            "type": "Agent",
+                            "agencyName": "kbishop9",
+                            "ecosystemName": "lray4",
+                            "deviceIP": "230.110.80.252"    
+                          },
+                          {
+                            "id": 195,
+                            "mainFileType": "groovyFile",
+                            "icon": "/groovyAgent.png",
+                            "name": "test",
+                            "type": "Agent",
+                            "agencyName": "kbishop9",
+                            "ecosystemName": "lray4",
+                            "deviceIP": "230.110.80.252"    
+                          },
+                          {
+                            "id": 13,
+                            "mainFileType": "rFile",
+                            "icon": "/RAgent.png",
+                            "name": "kcunningham2t",
+                            "type": "Agent",
+                            "agencyName": "kbishop9",
+                            "ecosystemName": "lray4",
+                            "deviceIP": "160.244.92.225"
+                          },
+                          {
+                            "id": 43,
+                            "mainFileType": "rFile",
+                            "icon": "/RAgent.png",
+                            "name": "bpowell2u",
+                            "type": "Agent",
+                            "agencyName": "ereid0",
+                            "ecosystemName": "lray4",
+                            "deviceIP": "196.6.114.66"
+                          },
+                          {
+                            "id": 62,
+                            "mainFileType": "rFile",
+                            "icon": "/RAgent.png",
+                            "name": "flawson2v",
+                            "type": "Agent",
+                            "agencyName": "ereid0",
+                            "ecosystemName": "lray4",
+                            "deviceIP": "159.133.212.242"
+                          },
+                          {
+                            "id": 34,
+                            "mainFileType": "groovyFile",
+                            "icon": "/groovyAgent.png",
+                            "name": "lflores2w",
+                            "type": "Agent",
+                            "agencyName": "mwelch1",
+                            "ecosystemName": "twest3",
+                            "deviceIP": "129.221.38.250"
+                          },
+                          {
+                            "id": 75,
+                            "mainFileType": "pyFile",
+                            "icon": "/pyAgent.png",
+                            "name": "wroberts2x",
+                            "type": "Agent",
+                            "agencyName": "welliott8",
+                            "ecosystemName": "aowens2",
+                            "deviceIP": "109.185.173.250"
+                          },
+                          {
+                            "id": 68,
+                            "mainFileType": "pyFile",
+                            "icon": "/pyAgent.png",
+                            "name": "mkelley2y",
+                            "type": "Agent",
+                            "agencyName": "lmills7",
+                            "ecosystemName": "aowens2",
+                            "deviceIP": "120.195.120.36"
+                          },
+                          {
+                            "id": 48,
+                            "mainFileType": "rFile",
+                            "icon": "/RAgent.png",
+                            "name": "tgriffin2z",
+                            "type": "Agent",
+                            "agencyName": "wtucker6",
+                            "ecosystemName": "jsimmons1",
+                            "deviceIP": "39.9.43.102"
+                          },
+                          {
+                            "id": 67,
+                            "mainFileType": "rFile",
+                            "icon": "/RAgent.png",
+                            "name": "jvasquez30",
+                            "type": "Agent",
+                            "agencyName": "jbarnes5",
+                            "ecosystemName": "dmartinez0",
+                            "deviceIP": "244.7.14.0"
+                          },
+                          {
+                            "id": 20,
+                            "mainFileType": "groovyFile",
+                            "icon": "/groovyAgent.png",
+                            "name": "jcox31",
+                            "type": "Agent",
+                            "agencyName": "lford3",
+                            "ecosystemName": "dmartinez0",
+                            "deviceIP": "44.43.25.30"
+                          }
+                        ];
+            
+        },
+
+        setStaticData: function(socketdata) {
+
+        },
+	listen: function(data) {
+         document.getElementById("abc").style.display="none"; 
+          console.log(data);
+	if(data!=null)
+	{
+	     document.getElementById("abc").style.display="block";
+	}
+          node_data=data;
+     var obj = node_data;
+     var table = document.getElementById("myTable");
+     $(table).empty();
+           for (var prop in obj) {
+      // important check that this is objects own property 
+      // not from prototype prop inherited
+	  if(prop!="children"){	
+          if(obj.hasOwnProperty(prop)){
+        console.log(prop + " = " + obj[prop]);
+        var row = table.insertRow(0);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = prop;
+        cell2.innerHTML = obj[prop];
+      }
+   }}
+   if(obj.type=="Agent")
+    document.getElementById("abc").style.display="inline";
+        },
+      getExposedFunctions:function(){
+        return [
+	
+	//Event Listener Function decaration	
+	{
+          displayName:'listen', //Name you want to display for the function
+          functionName:'listen' //This function should exist
+        }
+	
+	];
+      },
+      getEventList: function() {
+	//Trigger events
+	//Events.trigger('ArrayChange','dataToBeSent');        
+	return [
+	/*
+	Events that will be Exposed	
+	{
+          eventName: 'ArrayChange',
+          displayName: 'ArrayChange'
+        }
+	*/
+	];
+      }
+
+    });
+
+    return chartName;
+});

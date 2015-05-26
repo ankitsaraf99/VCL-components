@@ -1,0 +1,148 @@
+ .tags {
+    
+  display: inline-flex !important;
+-webkit-box-sizing: content-box;
+-moz-box-sizing: content-box;
+box-sizing: content-box;
+width: auto !important;
+height: 19px !important;
+padding: 10px !important;
+border: 1px solid #999 !important;
+font-size: 14px !important;
+background-color: rgb(221, 221, 221) !important;
+color: rgb(26, 26, 26) !important;
+font-weight: bold;
+  
+  }
+  .tags1 {
+    
+  display: inline-flex !important;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+  float: left !important;
+  width: auto !important;
+  height:19px !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  padding: 10px !important;
+  background-color: rgb(240, 240, 240) !important;
+  color: black;
+  position: relative;
+  top: 10px !important;
+  left: 7px !important;
+  }
+  #mycontainer{
+    display: block !important;
+  }
+
+  input.mytext{
+    
+    background-color: #FFF !important ;
+    width: 60% !important;
+    height:25px !important;
+    font-size: 14px !important;
+    border:none !important;
+    padding: 18px !important;
+    margin: 10px !important;
+    border: 1px solid #A5A5A5 !important;
+  }
+  #error{
+    padding-left: 20px !important;
+  font-size: 14px !important;
+  height: 21px !important;
+  width:auto !important;
+  color: red !important;
+  display:none;
+  }
+
+#panel {
+  height: 100% !important;
+  width: auto !important;
+  background-color: #F0F0F0 !important;
+  font-size: 12px !important;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
+  display:none;
+}
+#level
+{ border-color: rgba(255,255,255,1) !important;
+  border:ridge !important;
+  color: rgba(255,255,255,1) !important;
+  background-color: rgb(0,0,255) !important;
+  font-size: 14px !important;
+  display:none;
+
+}
+.label1
+{
+  color: rgba(255,0,0,1) !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+
+}
+.tag_heading {
+  border-color: rgba(255,255,255,1) !important;
+  /* border: ridge; */
+  padding: 10px !important;
+  color: rgba(207, 207, 207, 1) !important;
+  background-color: rgb(45, 45, 45) !important;
+  background: rgb(45, 45, 45) !important;
+  font-size: 16px !important;
+  text-align:center !important;
+  margin: 0px !important;
+}
+#myTable {
+  
+  text-align: left !important;
+  width: 100% !important;
+  background-color: #F5F5F5 !important;
+  border-collapse: collapse !important;
+  font-size: 14px !important;
+  color: #000000 !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  max-height:40%;
+  overflow: scroll !important;
+}
+
+#myTable td {
+  padding:5px !important;
+}
+
+
+#myTable > th, td {
+   border: 1px solid black !important;
+   width:50%;
+}
+
+
+#myTable tr:hover {
+  background-color: #DDD !important;
+  font-weight: 600 !important;
+  
+}
+#table_contain
+{
+    height: 100% !important;
+  overflow-y: scroll !important;
+}
+#mno{  
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  list-style-type: none !important;
+  padding-left: 10px !important;
+}
+
+li {
+  line-height: 18px;
+  padding-bottom: 10px;
+}
+.accordion_content
+{ padding: 0px !important;
+  height: 92% !important;
+  background-color: #F5F5F5 !important;
+  background: #F5F5F5 !important;
+}

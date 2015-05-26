@@ -1,0 +1,136 @@
+/* 
+Put all your CSS contents here.
+If you have multiple CSS files,  copy contents of all CSS files and paste them
+in this file.
+
+*/
+
+  .tags {
+    
+  display: inline-flex;
+-webkit-box-sizing: content-box;
+-moz-box-sizing: content-box;
+box-sizing: content-box;
+float: left;
+width: auto;
+height: 19px;
+padding: 10px;
+margin-left: 10px;
+border: 1px solid #999;
+font-size: 14px;
+background-color: rgb(221, 221, 221);
+color: rgb(26, 26, 26);
+font-weight: bold;
+  
+  }
+  .tags1 {
+    
+  display: inline-flex;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  float: left;
+  width: auto;
+  height:19px;
+  font-size: 14px;
+  font-weight: bold;
+
+padding: 10px;
+background-color: rgb(240, 240, 240);
+color: black;
+  
+  position: relative;
+top: 10px;
+left: 7px;
+  
+  
+  }
+  #mycontainer{
+    display: block;
+  }
+
+  input.mytext{
+    
+    background-color: #FFF;
+    width: 60%;
+    height:25px;
+    font-size: 14px;
+    border:none;
+    padding: 18px;
+    margin: 10px;
+    border: 1px solid #A5A5A5;
+  }
+  #error{
+    padding-left: 20px;
+  font-size: 14px;
+  height: 21px;
+  width:auto;
+  color: red;
+  display:none;
+  }
+
+#panel {
+  height: 100%;
+  width: auto;
+  background-color: #F0F0F0;
+  font-size: 12px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  
+}
+#level
+{ border-color: rgba(255,255,255,1);
+  border:ridge;
+  color: rgba(255,255,255,1);
+  background-color: rgb(0,0,255);
+  font-size: 14px;
+  display:none;
+
+}
+.label1
+{
+  color: rgba(255,0,0,1);
+  font-size: 12px;
+  font-weight: bold;
+
+}
+.pqr {
+  border-color: rgba(255,255,255,1);
+  /* border: ridge; */
+  padding: 10px;
+  color: rgba(207, 207, 207, 1);
+  background-color: rgb(45, 45, 45);
+  font-size: 16px;
+  text-align:center;
+}
+#myTable {
+  
+  text-align: left;
+  width: 100%;
+  background-color: #F5F5F5;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: #000000;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  max-height:40%;
+}
+
+#myTable td {
+  padding:5px;
+}
+
+
+#myTable > th, td {
+   border: 1px solid black;
+   width:50%;
+}
+
+
+#myTable tr:hover {
+  background-color: #DDD;
+  font-weight: 600;
+  
+}

@@ -1,0 +1,58 @@
+#panel,
+#panel ul,
+#panel ul li,
+#panel ul li a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#panel {
+  height:100vh;
+  width: auto;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  background:#1A1A1A;
+  font-size: 18px ;
+}
+#panel ul ul {
+  display: none;
+}
+.align-right {
+  float: right;
+}
+#panel > ul > li > a {
+  padding: 15px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  text-decoration: none;
+  color: white;
+  background: #343434;
+
+}
+#panel ul > li.open > a > span{
+  color:#FF9900;
+}
+
+#panel ul ul li a {
+  cursor: pointer;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #666666;
+  background:  #F9F9F9;
+}
+#panel ul ul li a:hover {
+
+  background: #E4E4E4;
+}
+#panel ul ul li a.active_link {
+
+  background: #E4E4E4;
+}
